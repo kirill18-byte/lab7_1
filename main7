@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+
+const int M = 20;
+const int N = 20;
+
+void task1();
+void task2();
+
+void get_matr(int matr[M][N], int &m, int &n);
+void show_matr(const int matr[M][N], int m, int n);
+
+void swap_halves(int matr[M][N], int m, int n);
+
+int main() {
+
+    int num;
+
+    do {
+        cout << "\n============================\n";
+        cout << "1 - Average of odd rows\n";
+        cout << "2 - Swap matrix halves\n";
+        cout << "0 - Exit\n";
+        cout << "Choose task: ";
+        cin >> num;
+
+        switch(num) {
+            case 1:
+                task1();
+                break;
+            case 2:
+                task2();
+                break;
+            case 0:
+                cout << "Exit...\n";
+                break;
+            default:
+                cout << "Wrong task number!\n";
+        }
+
+    } while(num != 0);
+
+    return 0;
+}
+
+// ================= Введення матриці =================
+void get_matr(int matr[M][N], int &m, int &n) {
+
+    cout << "Enter rows (m <= 20): ";
+    cin >> m;
+
+    cout << "Enter cols (n <= 20): ";
+    cin >> n;
+
+    cout << "Enter matrix elements:\n";
+
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            cin >> matr[i][j];
+}
+
+// ================= Виведення матриці =================
+void show_matr(const int matr[M][N], int m, int n) {
+
+    cout << "\nMatrix:\n";
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++)
+            cout << matr[i][j] << "\t";
+        cout << endl;
+    }
+}
+
+// ================= Задача 1 =================
+// Середнє арифметичне рядків 1,3,5,...
+void task1() {
+
+    int matr[M][N];
+    int row, col;
+
+    get_matr(matr, row, col);
+    show_matr(matr, row, col);
+
+    cout << "\nAverage of odd rows (1,3,5,...):\n";
+
+    for (int i = 0; i < row; i += 2) {
+
+        double sum = 0;
+
+        for (int j = 0; j < col; j++)
+            sum += matr[i][j];
+
+        cout << "Row " << i + 1 << " = "
+             << sum / col << endl;
+    }
+}
+
+// ================= Задача 2 =================
+// Обмін лівої і правої половини
+void task2() {
+
+    int matr[M][N];
+    int row, col;
+
+    get_matr(matr, row, col);
+
+    cout << "\nOriginal matrix:";
+    show_matr(matr, row, col);
+
+    int half = col / 2;
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < half; j++) {
+
+            int temp = matr[i][j];
+            matr[i][j] = matr[i][j + half];
+            matr[i][j + half] = temp;
+        }
+
+    cout << "\nMatrix after swapping halves:";
+    show_matr(matr, row, col);
+}
